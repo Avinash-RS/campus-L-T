@@ -595,6 +595,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  getInterviewpanelist(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  }
+
   getParticularInterviewpanelistWithoutLoader(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
       { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
@@ -880,6 +885,10 @@ emailJobList() {
 
 emailJobListbyId(id) {
   return this.http.post(`${this.BASE_URL}/broadcast/email-job-candidate-list`, id, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+generalCustEvaluationProcessingFeedbacks(data) {
+  return this.http.post(`${this.BASE_URL}/evaluation/processing-feedbacks`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
 

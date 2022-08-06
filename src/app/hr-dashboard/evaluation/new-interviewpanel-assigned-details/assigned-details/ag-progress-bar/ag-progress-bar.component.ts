@@ -25,7 +25,7 @@ export class AgProgressBarComponent implements ICellRendererAngularComp {
     getValueToDisplay(params: ICellRendererParams) {
       return {
         received_count: params.valueFormatted ? Number(params.valueFormatted) : (params.value ? Number(params.value) : 0),
-        total_count: params?.data?.total_count ? Number(params?.data?.total_count) : 0
+        panel_count: params?.data?.panel_count ? Number(params?.data?.panel_count) : 0
       } 
     }
 

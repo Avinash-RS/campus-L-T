@@ -1,0 +1,325 @@
+<form class="main-evaluation" [formGroup]="evaluationForm">
+    <div class="contant">
+  
+      <div class="row bg">
+        <div class="col-12">
+          <div>Adani Interview Evaluation Form
+          </div>
+        </div>
+      </div><br>
+  
+      <div class="row no-center-align">
+        <div class="col-4">
+          <div class="row">
+            <div class="col-5">
+              <span class="head"> Candidate name </span>
+            </div>
+            <div style="white-space: nowrap;" class="col-7 indent">
+              <span class="ans">: {{getCandidateData?.name}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-4">
+              <span class="head">Discipline </span>
+            </div>
+            <div class="col-8 indent">
+              <span class="ans">: {{getCandidateData?.field_discipline}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-5">
+              <span class="head"> Date of evaluation<span class="asterick">*</span> </span>
+            </div>
+            <div class="col-7">
+                <div class="date height-35">
+                <input class="height-35" style="padding-left: 12px;" placeholder="DD-MM-YYYY" [formControlName]="adaform_interview_date" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+  
+            </div>
+            <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+              <div class="col-5">
+                <span>&#160;</span>
+              </div>
+              <div style="margin-top: .25em;" class="col-7 validation">
+                <span *ngIf="interview_date.errors?.required">Evaluation Date is required</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="space"></div>
+  
+      <div class="row no-center-align">
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-5">
+              <span class="head">Date of birth </span>
+            </div>
+            <div style="white-space: nowrap;" class="col-7 indent">
+              <span class="ans">: {{getCandidateData?.field_dob}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-4">
+              <span class="head">Institute name </span>
+            </div>
+            <div class="col-8 indent">
+  
+              <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0]
+                && getCandidateData['education'][0]['field_institute'] ?
+                getCandidateData['education'][0]['field_institute'] : ''}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div  class="col-5">
+              <span class="head">Place of evaluation<span class="asterick">*</span> </span>
+            </div>
+            <div class="col-7">
+              <input class="place" placeholder="Enter here" [formControlName]="adaform_interview_place" matInput>
+            </div>
+            <ng-container *ngIf="interview_place.invalid && interview_place.touched">
+              <div class="col-5">
+                <span>&#160;</span>
+              </div>
+              <div style="margin-top: .25em;" class="col-7 validation">
+                <span *ngIf="interview_place.errors?.required">Evaluation place is required</span>
+                <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="space"></div>
+  
+    <ng-container>
+      <br>
+      <table class="evaluationTable">
+        <thead>
+          <tr>
+            <th>
+              <span class="attribute">Attributes</span>
+            </th>
+            <th *ngFor="let interviewer of receivedData; let i=index">
+              <div>
+                <span class="field"><span>Interviewer</span> : </span> <span class="value">{{interviewer.interviewer_name}}</span></div>
+              <div>
+                <span class="field"><span>Date</span>: </span> <span class="value">{{interviewer.interview_date|date:'dd/MM/yyyy'}}</span>
+              </div>
+              <div>
+                <span class="field"><span>Place</span>: </span> <span class="value">{{interviewer.interview_place}}</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let assessPoints of assessments; let i = index">
+            <td>
+              <h4>{{assessPoints.name}}</h4>
+              <ul>
+                <li *ngFor="let points of assessPoints.expoints; let j = index">{{points?.line}}</li>
+              </ul>
+            </td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">
+              <div class="performance" *ngIf="itemchek(evaluationDetails, i) else noData">
+                <em class="icon-checkbox" [ngClass]="itemchek(evaluationDetails, i)"></em>
+                <span style="margin-left: 5px;">{{itemchek(evaluationDetails, i)}}</span>
+              </div>
+              <ng-template #noData>
+                <div class="performance">
+                  <span>{{'-'}}</span>
+                </div>  
+              </ng-template>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Preferred work location</strong> </td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.work_location ? evaluationDetails?.work_location : '-'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Preferred Business Unit</strong> </td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.work_bu ? evaluationDetails?.work_bu : '-'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Comments</strong> </td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.comments ? evaluationDetails?.comments : '-'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Score Percentage</strong></td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.interview_score ? evaluationDetails?.interview_score : '-'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Attended Status</strong></td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.attend_status ? 'Attended' : (evaluationDetails?.not_attend_reason ? evaluationDetails?.not_attend_reason : '-')}}</td>
+          </tr>
+          <tr>
+            <td><strong>Reassign Requests</strong></td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">
+              <div class="performance" *ngIf="evaluationDetails?.next_round_recommend_status else noData">
+                <em class="icon-checkbox" [ngClass]="'Excellent'"></em>
+              </div>
+              <ng-template #noData>
+                <div class="performance">
+                  <span>{{'-'}}</span>
+                </div>  
+              </ng-template>
+          </tr>
+          <tr>
+            <td><strong>Reason for Reassign Request</strong></td>
+            <td *ngFor="let evaluationDetails of receivedData; let z = index">{{evaluationDetails?.reason_for_recommend ? evaluationDetails?.reason_for_recommend : '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <ng-container>
+      <div class="space"></div>
+      <div class="space"></div>
+      <div class="assesmentremarks">
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">Average Percentage</span>
+          </div>
+          <div class="col-9">
+            {{commonEvaluationDetails?.average_percentage}}
+          </div>
+        </div>
+
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">Overall Suitablity for the position
+            </span>
+          </div>
+          <div class="col-9 ">
+          <div class="suitablity w-50">
+            <div [ngClass]="(commonEvaluationDetails?.average_percentage >= commonEvaluationDetails?.score_configs.average_min && commonEvaluationDetails?.average_percentage <= commonEvaluationDetails?.score_configs.average_max)?'Average':''"><strong>Average</strong><div>{{commonEvaluationDetails?.score_configs.average_min}} - {{commonEvaluationDetails?.score_configs.average_max}}</div></div>
+            <div [ngClass]="(commonEvaluationDetails?.average_percentage >= commonEvaluationDetails?.score_configs.good_min && commonEvaluationDetails?.average_percentage <= commonEvaluationDetails?.score_configs.good_max)?'Good':''"><strong>Good</strong> <div>{{commonEvaluationDetails?.score_configs.good_min}} - {{commonEvaluationDetails?.score_configs.good_max}}</div></div>
+            <div [ngClass]="(commonEvaluationDetails?.average_percentage >= commonEvaluationDetails?.score_configs.excellent_min && commonEvaluationDetails?.average_percentage <= commonEvaluationDetails?.score_configs.excellent_max)?'Excellent':''"><strong>Excellent</strong> <div>{{commonEvaluationDetails?.score_configs.excellent_min}} - {{commonEvaluationDetails?.score_configs.excellent_max}}</div></div>
+          </div>
+        </div>
+        </div>
+        <ng-container *ngIf="commonEvaluationDetails?.hr_selection_decision && commonEvaluationDetails?.hr_selection_decision!='Yet to Evaluate' else evaluate">
+        <div class="space"></div>
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">Selection Decision</span>
+          </div>
+          <div class="col-9">
+            <div class="suitablity d-flex w-50 -">
+            <div *ngIf="commonEvaluationDetails?.hr_selection_decision=='Rejected'" [class]="'Average'">Not Selected</div>
+            <div *ngIf="commonEvaluationDetails?.hr_selection_decision=='Selected'" [class]="'Excellent'">Selected</div>
+            <div *ngIf="commonEvaluationDetails?.hr_selection_decision=='Yet to Evaluate' || !commonEvaluationDetails?.hr_selection_decision" [class]="'yet_to_evaluate'">Yet to Evaluate</div>
+          </div>
+  
+        </div>
+        </div>
+        <div class="space"></div>
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">HR Comments</span>
+          </div>
+          <div class="col-6">
+            <div style="border: 1px solid #d9d9d9; padding: 4px">
+              {{(commonEvaluationDetails && commonEvaluationDetails.hr_comments) ? commonEvaluationDetails.hr_comments : '-'}}  
+            </div>
+          </div>
+        </div>
+        <div class="space"></div>
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">Last Updated By</span>
+          </div>
+          <div class="col-6">
+            <div>
+              {{(commonEvaluationDetails && commonEvaluationDetails.updated_by) ? commonEvaluationDetails.updated_by : '-'}} at {{commonEvaluationDetails.updated_date ? (commonEvaluationDetails.updated_date | date: "dd MMM yyyy - HH:mm a") : ''}}
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <ng-template #evaluate>
+        <div class="space"></div>
+
+        <div class="row pad-bootom">
+          <div class="col-3">
+            <span class="text">Selection Decision</span>
+          </div>
+          <div class="col-9">
+            <nz-select class="select-normal" (ngModelChange)="selectionListChange()" [formControl]="selectionValue" nzPlaceHolder="Choose" nzShowSearch nzAllowClear>
+              <nz-option *ngFor="let selectionLabel of selectionValueList" [nzLabel]="selectionLabel?.label" [nzValue]="selectionLabel?.label"></nz-option>
+            </nz-select>
+            <div *ngIf="selectionValue.touched && selectionValue.errors" class="mand validation1">
+              <span *ngIf="selectionValue.errors?.required">Overall remarks is required</span>
+            </div>
+
+          </div>
+        </div>
+        <ng-container *ngIf="selectionValue?.value">
+          <div class="space"></div>
+
+          <div class="row pad-bootom">
+            <div class="col-3 mb-4">
+              <span class="text">HR Comments</span>
+            </div>
+            <div class="col-6">
+              <textarea style="height: 74px;" matInput placeholder="Enter here" [formControl]="finalHRComments"></textarea>
+              <div class="charCount">
+                {{finalHRComments?.value?.length || 0}}/255 characters
+              </div>
+              <div style="position: relative; top: -18px;" *ngIf="finalHRComments.touched && finalHRComments.errors" class="mand validation1">
+                <div *ngIf="finalHRComments.errors?.required">Overall remarks is required</div>
+                <div *ngIf="finalHRComments.errors?.maxlength">Maxlength of 255 characters only allowed</div>
+                <div *ngIf="finalHRComments.errors?.pattern">Alpha numerics only allowed</div>
+              </div>
+            </div>
+          </div>  
+
+          <div *ngIf="selectionValue?.value == 'Reassign'" class="row pad-bootom">
+            <div class="col-3 mb-4">
+              <span class="text">&nbsp;</span>
+            </div>
+            <div class="col-6">
+              <ag-grid-angular style="width: 99%; height: 450px; margin: auto !important" class="ag-theme-alpine" [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSizeHR"
+              [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR" (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)" (filterModified)="getModelHR($event)" headerHeight="40"
+               [statusBar]="statusBarHR" [animateRows]="true">
+          </ag-grid-angular>
+
+            </div>
+          </div> 
+          
+          <div class="row pad-bootom">
+            <div class="col-3">
+              <span class="text">&nbsp;</span>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-center justify-content-center">
+                <button (click)="submitEvaluation()" class="submit-btn" type="button" mat-button>Submit</button>
+              </div>
+            </div>
+          </div> 
+
+        </ng-container>
+      </ng-template>
+        <div class="space"></div>
+
+      </div>
+    </ng-container>
+    </ng-container>
+  
+    </form>
+  <div class="space"></div>
+  

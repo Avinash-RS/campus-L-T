@@ -336,36 +336,32 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     if(this.customerCode != '#LTTS' && this.customerCode != '#ADANI') {
       let GeneralCol = [
         {
-          headerName: 'Additional Info', field: 'panel_assigned',
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            applyMiniFilterWhileTyping: true
-          },
-          minWidth: 140,
-          sortable: true,
-          cellStyle: {'text-align': 'center'},
-          tooltipField: 'panel_assigned',
-          valueGetter: (params) => {
-            return params && params.data &&  params.data.panel_assigned ? params.data.panel_assigned : 'Unassigned'
-          },
-          getQuickFilterText: (params) => {
-            return params.value;
-          }
-        },
-        {
-          headerName: 'Feedback Received', field: 'received_count',
+          headerName: 'Feedback Received', field: 'feedback_received_count',
           filter: 'agNumberColumnFilter',
           filterParams: {
             applyMiniFilterWhileTyping: true
           },
           minWidth: 140,
           sortable: true,
-          tooltipField: 'received_count',
+          tooltipField: 'feedback_received_count',
           // getQuickFilterText: (params) => {
           //   return params.value;
           // },
           cellRendererFramework: AgProgressBarComponent
         },    
+        {
+          headerName: 'Additional Info', field: 'panel_recommended_status',
+          filter: 'agSetColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
+          minWidth: 140,
+          sortable: true,
+          tooltipField: 'panel_recommended_status',
+          getQuickFilterText: (params) => {
+            return params.value;
+          }
+        },
         {
           headerName: 'Interview Status', field: 'interview_status',
           filter: 'agSetColumnFilter',
@@ -380,10 +376,10 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
             if (params.data && (params.data.interview_status) =="Selected") {
               return `<button class="ag-button-custom completed-color common-button-height-28">${params.data.interview_status}</button>`;
             }
-            if(params.data.interview_status == "" || params.data.interview_status == null) {
+            if(params.data.interview_status == "" || params.data.interview_status == null || params.data.interview_status == 'Yet to evaluate') {
               return `<button class="ag-button-custom yet-to-start-color common-button-height-28">Yet to evaluate</button>`;
             }
-            if(params.data.interview_status == "Not Selected") {
+            if(params.data.interview_status == "Rejected") {
               return `<button class="ag-button-custom rejected-color common-button-height-28">${params.data.interview_status}</button>`;
             }
           }
@@ -516,20 +512,6 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
 
       if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
-      this.rowData = [
-        {
-          panel_assigned: '1',
-          interview_status: 'Selected',
-          received_count: 1,
-          total_count: 5
-        },
-        {
-          panel_assigned: '1',
-          interview_status: 'Selected',
-          received_count: 0,
-          total_count: 0
-        }
-      ]
       if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
       this.rowData.forEach(element => {
         if (element) {
