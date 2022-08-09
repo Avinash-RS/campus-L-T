@@ -43,6 +43,7 @@ export class AdaniInterviewResultsComponent implements OnInit {
   @Input() uid;
   @Input() status;
   @Input() shortlist_name;
+  @Input() email;
   intervieweeAttendance: any;
   Notattended: any;
   attendedStatusList: any;

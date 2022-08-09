@@ -1,6 +1,6 @@
 <ng-container *ngIf="customerCode == '#ADANI'">
-  <app-adani-interview-results [candidateId]="candidateId" [nameOfAssessment]="nameOfAssessment" [uid]="uid" [status]="status" [shortlist_name]="shortlist_name"></app-adani-interview-results>
+  <app-adani-interview-results [email]="email" [candidateId]="candidateId" [nameOfAssessment]="nameOfAssessment" [uid]="uid" [status]="status" [shortlist_name]="shortlist_name"></app-adani-interview-results>
 </ng-container>
 <ng-container *ngIf="customerCode != '#ADANI'">
-  <app-general-interview-results [candidateId]="candidateId" [nameOfAssessment]="nameOfAssessment" [uid]="uid" [status]="status" [shortlist_name]="shortlist_name"></app-general-interview-results>  
+  <app-general-interview-results [email]="email" [candidateId]="candidateId" [nameOfAssessment]="nameOfAssessment" [uid]="uid" [status]="status" [shortlist_name]="shortlist_name"></app-general-interview-results>  
 </ng-container>

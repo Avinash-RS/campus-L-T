@@ -45,6 +45,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
   @Input() uid;
   @Input() status;
   @Input() shortlist_name;
+  @Input() email;
   customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     private appConfig: AppConfigService

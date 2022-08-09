@@ -46,6 +46,7 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
   @Input() uid;
   @Input() status;
   @Input() shortlist_name;
+  @Input() email;
   paginationPageSizeHR = 500;
   cacheBlockSizeHR: any = 500;
   gridApiHR: any;
@@ -100,6 +101,7 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
   commonEvaluationDetails: any;
   getParticularInterviewpanelistSubscription: Subscription;
   generalCustEvaluationProcessingFeedbacksSubscription: Subscription;
+  assignToHRSubscription: Subscription;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -253,7 +255,7 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
             showOk: ''
           };
         } else {
-          this.appConfig.warning('No Interview Panels were selected');
+          return this.appConfig.warning('No Interview Panels were selected');
         }
       } else {
         data = {
@@ -311,7 +313,56 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
   }
 
   reassignAPI(data) {
-    console.log('reassignAPI', data);
+    const apiData = {
+      shortlist_name: data?.shortlist_name,
+      user_email: [this.email],
+      hr_email: data?.emails,
+      reassigned_panel_status: 1,
+      reason_for_reassign: data?.hr_comments
+    }
+    this.assignToHRSubscription = this.adminService.assignToHR(apiData).subscribe((data: any) => {
+      const datas = {
+         iconName: '',
+         dataToBeShared: {
+           confirmText: `Candidate has been successfully assigned to respective interview panels`,
+           type: 'assign-hr',
+           identity: 'panel-assign'
+         },
+         showConfirm: 'Confirm',
+         interViwePanelAssign: 'noData',
+         showCancel: '',
+         showOk: ''
+       };
+       this.matDialog.closeAll();
+       this.onReassignSuccessPopup(ShortlistBoxComponent, datas);
+   }, (err) => {
+   });
+  }
+
+  onReassignSuccessPopup(component, data) {
+    let dialogDetails: any;
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+      const apiData = {
+        shortlist_name: this.shortlist_name ? this.shortlist_name : '',
+        college_name: '',
+        education_level: '',
+        status: ''
+      };
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED, {data: JSON.stringify(apiData)});
+    });
   }
 
   evaluationSubmitApi(data) {
@@ -327,12 +378,10 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
     }, (err)=> {
 
     });
-    console.log('evaluationSubmitApi', data);
   }
 
   // To get all users
   getPanelList(interviewer_ids) {
-    console.log('inter', interviewer_ids);
     const apiData = {
       discipline: '',
       interviewer_ids
@@ -438,5 +487,6 @@ export class GeneralInterviewResultsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.getParticularInterviewpanelistSubscription ? this.getParticularInterviewpanelistSubscription.unsubscribe() : '';
     this.generalCustEvaluationProcessingFeedbacksSubscription ? this.generalCustEvaluationProcessingFeedbacksSubscription.unsubscribe() : '';
+    this.assignToHRSubscription ? this.assignToHRSubscription.unsubscribe() : '';
   }
 }

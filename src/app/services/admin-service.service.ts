@@ -516,11 +516,6 @@ export class AdminServiceService {
   }
 
   //assign candidate to interview panel
-  assignCandidateTOPanel(data) {
-    return this.http.post(`${this.BASE_URL}/Profile/evaluation_hr_assign`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
   getAllShortlistedShortlistNames() {
     return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
