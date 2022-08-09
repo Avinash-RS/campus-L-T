@@ -177,6 +177,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.assessments.forEach((element: any) => {
           element.isChecked = 'false';
         });
+        this.radioChange(data && data[this.adaform_recommend].toString() ? {value: data[this.adaform_recommend].toString()} : {value: '0'});
         this.status != '2' ?  '' : this.evaluationForm.disable();
       }
     }, (err) => {
@@ -297,8 +298,13 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_recommend].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_recommend].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(250), myGlobals.alphaNum]);
-        this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();
+        if (this.evaluationForm[this.adaform_recommend].value == '1') {
+          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(250), myGlobals.alphaNum]);
+          this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();  
+        } else {
+          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
+          this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();  
+        }
 
         // this.evaluationForm['controls'][this.adaform_valuesIntegrity].setValidators([Validators.required]);
         // this.evaluationForm['controls'][this.adaform_valuesIntegrity].updateValueAndValidity();
