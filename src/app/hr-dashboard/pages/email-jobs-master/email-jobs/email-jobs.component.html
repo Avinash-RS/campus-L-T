@@ -33,7 +33,7 @@
                     Subject: {{selectedTemplate.subject}}
                 </div>
                 <div class="content">
-                    <div [innerHTML]="selectedTemplate?.content"></div>
+                    <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(selectedTemplate?.content)"></div>
                 </div>
             </div>
         </mat-dialog-content>

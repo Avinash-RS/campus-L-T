@@ -42,31 +42,7 @@
     }
 }
 
-:host ::ng-deep .select-group {
-    .ant-select-selection {
-        height: 31px !important;
-    }
-}
-
-::ng-deep .ant-select-dropdown-menu-item-group-list {
-    .ant-select-dropdown-menu-item {
-        color: #373331;
-        font-size: 14px;
-    }
-    .ant-select-dropdown-menu-item:hover {
-        background-color: #004684 !important;
-        color: #ffffff;
-    }
-}
-
-::ng-deep .ant-select-dropdown-menu-item-group-title {
-    font-size: 13px;
-    color: #848484;
-    font-weight: 500;
-}
-
 ::ng-deep .viewtemplatepopover {
-    max-height: 460px;
     min-height: 350px;
     .mat-dialog-container {
         position: relative;

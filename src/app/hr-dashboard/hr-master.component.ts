@@ -71,13 +71,13 @@ export class HrMasterComponent implements OnInit {
       {
         url: this.appConstant.HR_DASHBOARD.HR_EMAIL_TRIGGER,
         name: `Email Trigger`,
-        icon: 'icon-mail-outline',
+        icon: 'icon-email-arrow-right-outline',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.HR_EMAIL_JOBS,
         name: `Email Jobs`,
-        icon: 'icon-mail-opened',
+        icon: 'icon-email-check-outline',
         hide: false
       },
       {

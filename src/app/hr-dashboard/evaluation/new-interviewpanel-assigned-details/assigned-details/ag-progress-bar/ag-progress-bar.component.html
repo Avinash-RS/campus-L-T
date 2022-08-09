@@ -1,0 +1,4 @@
+<div class="progress">
+    <div class="value">{{cellValue?.received_count ? cellValue?.received_count : 0}} out of {{cellValue?.panel_count ? cellValue?.panel_count : 0}}</div>
+    <mat-progress-bar mode="determinate" [value]="(cellValue?.received_count && cellValue?.panel_count) ?  (cellValue?.received_count / cellValue?.panel_count * 100) : 0"></mat-progress-bar>
+</div>

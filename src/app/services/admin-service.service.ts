@@ -516,11 +516,6 @@ export class AdminServiceService {
   }
 
   //assign candidate to interview panel
-  assignCandidateTOPanel(data) {
-    return this.http.post(`${this.BASE_URL}/Profile/evaluation_hr_assign`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
   getAllShortlistedShortlistNames() {
     return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
@@ -593,6 +588,11 @@ export class AdminServiceService {
   getParticularInterviewpanelist(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getInterviewpanelist(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   getParticularInterviewpanelistWithoutLoader(data) {
@@ -880,6 +880,10 @@ emailJobList() {
 
 emailJobListbyId(id) {
   return this.http.post(`${this.BASE_URL}/broadcast/email-job-candidate-list`, id, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+generalCustEvaluationProcessingFeedbacks(data) {
+  return this.http.post(`${this.BASE_URL}/evaluation/processing-feedbacks`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
 

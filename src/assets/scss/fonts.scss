@@ -39,11 +39,11 @@
 // Icon Fonts - Icomoon
 @font-face {
     font-family: 'icomoon';
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?tcijsf');
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?tcijsf#iefix') format('embedded-opentype'),
-      url('/assets/fonts/icomoon/fonts/icomoon.ttf?tcijsf') format('truetype'),
-      url('/assets/fonts/icomoon/fonts/icomoon.woff?tcijsf') format('woff'),
-      url('/assets/fonts/icomoon/fonts/icomoon.svg?tcijsf#icomoon') format('svg');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?hh5k3w');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?hh5k3w#iefix') format('embedded-opentype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.ttf?hh5k3w') format('truetype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.woff?hh5k3w') format('woff'),
+      url('/assets/fonts/icomoon/fonts/icomoon.svg?hh5k3w#icomoon') format('svg');
 
     // src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
     //       url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
@@ -75,6 +75,15 @@
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  .icon-refresh_reset:before {
+    content: "\e9ad";
+  }
+  .icon-email-arrow-right-outline:before {
+    content: "\e9af";
+  }
+  .icon-email-check-outline:before {
+    content: "\e9ae";
   }
   .icon-assess:before {
     content: "\e963";

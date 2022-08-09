@@ -269,3 +269,13 @@ th {
       }
   }
 }
+.header-status-width {
+  min-width: 350px !important;
+}
+
+:host ::ng-deep.fade-btn {
+  cursor: not-allowed;
+  opacity: .7;
+  color: #000;
+  border-color: grey;
+}

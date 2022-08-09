@@ -155,19 +155,23 @@ export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit, OnD
   }
 
   emailContentConfirmationPopup() {
-   this.dialog.open(this.emailContentConfirmation, {
-      width: '600px',
-      height: 'auto',
-      id: '1',
-      autoFocus: false,
-      closeOnNavigation: true,
-      disableClose: false,
-      panelClass: 'form-confirmation-pop-up'
-    }).afterClosed().subscribe((res)=> {
-      if (res) {
-        this.nextStage();
-      }
-    });
+    if (this.ChooseTemplateComponent?.htmlContent && this.ChooseTemplateComponent?.selectedSubject?.value) {
+      this.dialog.open(this.emailContentConfirmation, {
+        width: '600px',
+        height: 'auto',
+        id: '1',
+        autoFocus: false,
+        closeOnNavigation: true,
+        disableClose: false,
+        panelClass: 'form-confirmation-pop-up'
+      }).afterClosed().subscribe((res)=> {
+        if (res) {
+          this.nextStage();
+        }
+      });  
+    } else {
+      this.appConfig.warning('Provide a valid email subject and body content');
+    }
 
   }
 

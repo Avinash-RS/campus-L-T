@@ -63,14 +63,22 @@
         color: #373331;
         font-size: 14px;
     }
-    .ant-select-dropdown-menu-item:hover {
-        background-color: #004684 !important;
-        color: #ffffff;
+    .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+      background-color: #eaeaea !important;
     }
+  
+    .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+        background-color: rgb(211, 211, 211, 0.7) !important;
+    }
+  
+    // .ant-select-dropdown-menu-item:hover {
+    //     background-color: #004684 !important;
+    //     color: #ffffff;
+    // }
 }
 ::ng-deep .ant-select-dropdown-menu-item-group-title {
-    font-size: 13px;
-    color: #848484;
+    font-size: 15px;
+    color: #6B6B6B;
     font-weight: 500;
 }
 ::ng-deep .profileAvatar {
@@ -200,7 +208,7 @@
         .tbodyFixed {
             display: block;
             max-height: 300px;
-            overflow-y: scroll;
+            overflow-y: auto;
         }
     }
       .confirmation-button-wrapper {
