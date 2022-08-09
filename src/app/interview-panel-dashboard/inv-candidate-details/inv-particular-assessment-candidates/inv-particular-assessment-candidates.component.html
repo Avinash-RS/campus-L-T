@@ -1,17 +1,22 @@
 
 <div class="inv-particular-assessment-candidate" #agheight>
     <div class="user-list-wrapper" [ngClass]="rowData && rowData.length > 0 ? '' : ''">
-        <div class="leftinfo" [ngClass]="customerCode=='#LTTS' || customerCode=='#ADANI' ? '' : 'header-status-width'">
+        <div class="leftinfo">
             <div>
                 <span>{{rowData ? rowData.length : 0}}</span> Assigned Candidates
             </div>
-            <div>
+            <div *ngIf="customerCode=='#LTTS' || customerCode=='#ADANI' else generalStatus">
                 <span>{{candidatesEvaluated.length}}</span> Candidates Evaluated
             </div>
-            <div *ngIf="customerCode=='#LTTS'">
+            <ng-template #generalStatus>
+              <div>
+                <span>{{sentToHr.length}}</span> Candidates Evaluated
+            </div>
+            </ng-template>
+            <div *ngIf="customerCode=='#LTTS' || customerCode!='#ADANI'">
                 <span>{{selectedCount.length}}</span> Shortlisted
             </div>
-            <div *ngIf="customerCode=='#LTTS'">
+            <div *ngIf="customerCode=='#LTTS' || customerCode!='#ADANI'">
                 <span>{{rejectedCount.length}}</span> Rejected
             </div>
             <div *ngIf="customerCode=='#LTTS' || customerCode=='#ADANI'">
