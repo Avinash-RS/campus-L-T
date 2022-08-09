@@ -172,6 +172,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.status = data && (data?.interivew_status == 'Selected' || data?.interivew_status == 'Rejected') ? '2' : this.status;
         this.status != '2' ?  '' : this.evaluationForm.disable();
         this.evaluationApiResult = data;
+        this.radioChange(data && data[this.adaform_recommend].toString() ? {value: data[this.adaform_recommend].toString()} : {value: '0'});
       } else {
         this.assessments.forEach((element: any) => {
           element.isChecked = 'false';
@@ -412,6 +413,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
   submitEvaluationFormAPI() {
     const dateInterview = this.evaluationForm.value[this.adaform_interview_date] ? moment(this.evaluationForm.value[this.adaform_interview_date]).format('YYYY-MM-DD') : '';
     let formData = this.evaluationForm.getRawValue();
+    formData[this.adaform_recommend_comments] = formData && formData[this.adaform_recommend].toString() && formData[this.adaform_recommend].toString() == '1'  ? formData[this.adaform_recommend_comments] : null;
     formData[this.adaform_interview_date] = dateInterview;
     formData.uid = this.uid ? this.uid : '';
     formData.shortlist_name = this.shortlist_name ? this.shortlist_name : '';
