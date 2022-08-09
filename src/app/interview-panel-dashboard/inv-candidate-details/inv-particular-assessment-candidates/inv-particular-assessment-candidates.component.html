@@ -1,20 +1,20 @@
 
 <div class="inv-particular-assessment-candidate" #agheight>
     <div class="user-list-wrapper" [ngClass]="rowData && rowData.length > 0 ? '' : ''">
-        <div class="leftinfo">
+        <div class="leftinfo" [ngClass]="customerCode=='#LTTS' || customerCode=='#ADANI' ? '' : 'header-status-width'">
             <div>
                 <span>{{rowData ? rowData.length : 0}}</span> Assigned Candidates
             </div>
             <div>
                 <span>{{candidatesEvaluated.length}}</span> Candidates Evaluated
             </div>
-            <div *ngIf="customerCode!=='#ADANI'">
+            <div *ngIf="customerCode=='#LTTS'">
                 <span>{{selectedCount.length}}</span> Shortlisted
             </div>
-            <div *ngIf="customerCode!=='#ADANI'">
+            <div *ngIf="customerCode=='#LTTS'">
                 <span>{{rejectedCount.length}}</span> Rejected
             </div>
-            <div>
+            <div *ngIf="customerCode=='#LTTS' || customerCode=='#ADANI'">
               <span>{{sentToHr.length}}</span> Sent to HR
           </div>
         </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="search-bar">
               <div class="headerbtn" *ngIf="rowData && rowData.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
-                <button *ngIf="customerCode!=='#ADANI'" (click)="finalSubmit()" class="common-button-with-icon" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
+                <button *ngIf="customerCode=='#LTTS'" (click)="finalSubmit()" class="common-button-with-icon" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
                 <span class="icon-checked mr-2"></span> <span>Send to HR for Processing</span>
               </button>
             </div>

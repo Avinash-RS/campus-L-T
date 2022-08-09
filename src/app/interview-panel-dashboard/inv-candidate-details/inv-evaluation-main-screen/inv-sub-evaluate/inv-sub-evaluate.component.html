@@ -1,6 +1,6 @@
 <ng-container *ngIf="isAccessGranted() else permissionDenied">
 
-<ng-container *ngIf="customerCode!=='#ADANI'|| customerCode==''">
+<ng-container *ngIf="customerCode=='#LTTS'">
 <ng-container *ngIf="(candidateId && uid && formId == '1') && passT0Tabevaluate">
 <app-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-evaluation-form>
 </ng-container>
@@ -17,6 +17,11 @@
 <ng-container *ngIf="customerCode=='#ADANI'">
   <app-adani-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-adani-evaluation-form>
 </ng-container>
+
+<ng-container *ngIf="customerCode!='#ADANI' && customerCode!='#LTTS'">
+  <app-general-customer-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-general-customer-evaluation-form>
+</ng-container>
+
 </ng-container>
 
 

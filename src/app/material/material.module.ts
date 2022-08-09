@@ -23,7 +23,8 @@ import {
   MatExpansionModule,
   MatCardModule,
   MatMenuModule,
-  MatStepperModule
+  MatStepperModule,
+  MatProgressBarModule
 } from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -58,7 +59,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatCardModule,
     MatMenuModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressBarModule
   ],
   exports: [
     CommonModule,
@@ -87,7 +89,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatCardModule,
     MatMenuModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

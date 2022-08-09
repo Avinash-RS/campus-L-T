@@ -1,0 +1,395 @@
+@import "../../../../../../themes/themes.scss";
+* {
+  word-break: break-word;
+}
+.main-evaluation {
+  height: 100%;
+  background: $wrapper-light-gray;
+}
+.contant {
+  padding: 5px;
+  margin-top: 14px;
+
+  .head {
+    font-weight: 400;
+    color: #1b0303;
+    font-size: 13px;
+  }
+  .ans {
+    font-weight: 400;
+    color: #282828;
+    // display: flex;
+  }
+}
+th.mat-header-cell {
+  background: $blue-3 0% 0% no-repeat padding-box;
+  color: $black;
+}
+.space {
+  margin-top: 15px !important;
+}
+// .submit {
+//   background-color: $blue-4;
+//   color: $white;
+// }
+.bg {
+  color: #545454;
+  height: 43px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  .col-12 {
+    padding: 0;
+  }
+}
+.bg-2 {
+  background: $disable-gray !important;
+  height: 32px;
+  padding-top: 6px;
+  color: $black;
+}
+
+:host ::ng-deep.mat-form-field-wrapper {
+  position: relative;
+  height: 53px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 0px !important;
+  padding: 0px !important;
+  border: 1px solid;
+  height: 34px;
+}
+
+:host ::ng-deep .mat-form-field {
+  line-height: 1.125 !important;
+}
+.head-h5 {
+  color: $blue-4;
+}
+
+.vertical {
+  border-left: 61px solid $blue-4;
+  max-width: 100%;
+  height: 5px;
+  position: absolute;
+  left: 6px;
+  margin-top: -5px;
+  border-radius: 17px;
+}
+.margin {
+  margin-left: 5px;
+}
+
+// table {
+//   width: 100%;
+//   overflow-x: auto;
+//   overflow-y: hidden;
+//   background: $wrapper-light-gray;
+// }
+
+.radioButtonCell {
+  width: 75px;
+  text-align: center;
+  position: relative;
+}
+
+.headerCell {
+  text-align: center;
+}
+
+.border-right {
+  border-right: 1px solid $black !important;
+  padding-left: 7%;
+  padding-right: 7%;
+}
+.in-box {
+  border: 1px solid #d9d9d9;
+  height: 31px;
+}
+.box {
+  border: 1px solid;
+  padding: 6px;
+  width: 100%;
+  display: flex;
+}
+.example-full-width {
+  width: 100%;
+}
+.pad-bootom {
+  padding-bottom: 10px;
+}
+.text {
+  font-weight: 500;
+}
+.text-cnt {
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+  color: $black !important;
+}
+.place {
+  border: 1px solid rgb(217 217 217);
+  margin-top: -8px;
+  border-radius: 3px;
+  height: 35px;
+  width: 200px !important;
+  outline: none;
+}
+.height-35 {
+  height: 35px;
+}
+.date {
+  border: 1px solid rgb(217 217 217);
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-top: -8px;
+  input {
+    outline: none;
+    border: none;
+    height: 33px;
+  }
+}
+.radioDisp {
+  display: contents;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.indent {
+  text-indent: -0.5em;
+}
+.main-evaluation {
+  input,
+  textarea {
+    width: 100%;
+    outline: none;
+    padding: 4px !important;
+    color: $secondary !important;
+    border-radius: 3px;
+  }
+  input:hover,
+  textarea:hover {
+    border: solid 1px $primary-input-border-color;
+  }
+}
+
+.col-7 {
+  align-items: center !important;
+  display: flex !important;
+}
+.validation {
+  margin-top: -0.5em;
+  font-size: 12px;
+  font-weight: 400;
+  color: $red;
+}
+.validation1 {
+  font-size: 12px;
+  font-weight: 400;
+  color: $red;
+}
+textarea {
+  border: 1px solid #d9d9d9;
+}
+textarea.ng-touched.ng-invalid,
+input.ng-touched.ng-invalid {
+  border: solid $red 1px;
+}
+.row {
+  align-items: center;
+}
+.no-center-align {
+  align-items: flex-start !important;
+}
+.last-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+:host ::ng-deep .mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled
+  .mat-form-field-infix::after {
+  cursor: not-allowed !important;
+}
+:host ::ng-deep .mat-radio-disabled {
+  cursor: not-allowed !important;
+  .mat-radio-label {
+    cursor: not-allowed !important;
+  }
+}
+:host ::ng-deep .mat-datepicker-toggle {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  .mat-icon-button {
+    height: 26px;
+    width: 20px;
+  }
+}
+.subPoint {
+  font-size: 12px;
+  margin-left: 10px;
+  list-style: none;
+}
+
+// Table Starts
+.evaluationTable {
+  width: 96% !important;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(170, 170, 170, 0.4);
+  thead {
+    background: #E6E3E3 !important;
+    tr {
+      th {
+        width: 24;
+        min-width: 24%;
+        padding: 5px 24px !important;
+        background-color: #EDEDED;
+        .attribute {
+          font-size: 16px;
+          font-weight: 500;
+          color: #232323;
+          line-height: normal;
+        }
+        div {
+          font-size: 15px;
+          font-weight: 400;
+          color: #222222;
+          display: grid;
+          margin-top: 2px;
+          grid-template-columns: 33% 67%;
+          grid-auto-rows: initial;
+          .field,.value {
+            white-space: normal;
+            display: inline-block;
+            color: #666666;
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .field {
+            display: flex !important;
+            padding-right: 8px;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+  tbody> tr:hover{
+    background-color: #ceddf347;
+    border-right: 1px solid #4e9fc2 !important;
+    border-left: 1px solid #4e9fc2 !important;
+  }
+  tbody {
+    tr {
+      td {
+        width: 24%;
+        min-width: 24%;
+        padding: 16px 24px !important;
+        border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+        .performance {
+          display: flex;
+          align-items: center;
+          em {
+            font-size: 25px;
+            &.Average {
+              color: #C02222;
+            }
+            &.Good {
+              color: #FFA700;
+            }
+            &.Excellent {
+              color: #5EBA69;
+            }
+          }
+          span {
+            margin-left: 5px;
+            color: #333333;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: normal;
+          }
+        }
+        h4 {
+          font-size: 16px;
+          font-weight: 500;
+          color: #222222;
+          line-height: normal;
+        }
+        ul {
+          list-style-type: none;
+          margin: 10px 0 0 15px;
+          li {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666666;
+            line-height: normal;
+            margin-bottom: 10px;
+            position: relative;
+            &::before {
+              content: '';
+              position: absolute;
+              left: -12px;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 6px;
+              height: 1px;
+              background-color: #666666;
+            }
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.charCount {
+  display: flex;
+  font-size: 12px;
+  color: grey;
+  justify-content: flex-end;
+}
+.assesmentremarks{
+  width: 96%;
+  margin: 0 auto;
+}
+
+.suitablity{
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  .Average {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #C02222;
+  }
+  .Good {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #FFA700;
+  }
+  .Excellent {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #5EBA69;
+  }
+}
+
