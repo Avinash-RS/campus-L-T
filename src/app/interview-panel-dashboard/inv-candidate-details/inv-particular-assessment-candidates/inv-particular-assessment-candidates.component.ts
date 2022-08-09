@@ -752,8 +752,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
     }, 0);
-    let apcall = this.customerCode == '#ADANI' ? this.adminService.adaniInvSubmittedCandidatesList():this.adminService.invSubmittedCandidatesList(apiData)
-   this.invSubmittedCandidatesListSubscription = apcall.subscribe(
+    let apcall = this.customerCode == '#LTTS' ? this.adminService.invSubmittedCandidatesList(apiData) : this.adminService.adaniInvSubmittedCandidatesList();
+    this.invSubmittedCandidatesListSubscription = apcall.subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
         this.userList = [];
