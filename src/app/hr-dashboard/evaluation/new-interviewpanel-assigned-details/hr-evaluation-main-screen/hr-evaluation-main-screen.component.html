@@ -20,13 +20,14 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="Interview Results" *ngIf="customerCode=='#ADANI'">
+  <mat-tab label="Interview Results" *ngIf="customerCode!='#LTTS'">
     <div *ngIf="TabIndex == 2" class="selected-div">
        <app-hr-sub-interview-results [shortlist_name]='queryParams.shortlist_name' 
        [uid]='queryParams.uid' 
        [status]='queryParams.status' 
        [candidateId]='candidateId'
-       [nameOfAssessment]='nameOfAssessment' 
+       [nameOfAssessment]='nameOfAssessment'
+       [email]="email"
        ></app-hr-sub-interview-results>
     </div>
   </mat-tab>

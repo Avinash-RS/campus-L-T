@@ -174,6 +174,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     }
 
     if (event.colDef.field === "normal_evaluation_btn") {
+      if (event["data"]["normal_evaluation_btn"] == "Yet to Evaluate" && (event["data"]["normal_assessment"]["interview_status"] == "Selected" || event["data"]["normal_assessment"]["interview_status"] == "Rejected" || event["data"]["normal_assessment"]["interview_status"] == "Not Selected")) {
+
+      } else {
         this.appConfig.setLocalData(
           "cProPic",
           event["data"]["profile_image_url"]
@@ -191,6 +194,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["is_video_scheduled"],
           event["data"]["is_normal_scheduled"]
           );
+      }
     }
 
     if (event.colDef.field === "Video_Interview_join_interview") {
@@ -281,7 +285,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   defaultColumns() {
-    return [
+    let defaultCols: any = [
       {
         headerName: 'Candidate Info',
         children: [
@@ -361,6 +365,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     ]
   }
  ]
+ this.appConfig.getSelectedCustomerCode() != '#LTTS' ? defaultCols[0].children.shift() : '';
+ return defaultCols;
 }
 
   videoInterviewColumns() {
@@ -465,6 +471,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (params["data"] && params["data"]["normal_evaluation_btn"] == "Submitted") {
             return `<button class="btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
+          }
+          if(params["data"] && params["data"]["normal_evaluation_btn"] == "Yet to Evaluate" && (params["data"]["normal_assessment"]["interview_status"] == "Selected" || params["data"]["normal_assessment"]["interview_status"] == "Rejected" || params["data"]["normal_assessment"]["interview_status"] == "Not Selected")) {
+            return `<button class="btn-outline fade-btn">${params["data"]["normal_evaluation_btn"]}</button>`;
           }
           if(params["data"] && params["data"]["normal_evaluation_btn"] == "Yet to Evaluate") {
             return `<button class="btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;

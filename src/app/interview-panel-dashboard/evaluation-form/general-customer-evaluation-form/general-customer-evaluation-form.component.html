@@ -1,0 +1,372 @@
+<form class="main-evaluation" [formGroup]="evaluationForm" (ngSubmit)="submitEvaluationForm()">
+    <div class="contant">
+  
+      <div class="row bg mb-0">
+        <div class="col-12 d-flex justify-content-between">
+          <div>Adani Interview Evaluation Form
+          </div>
+          <button *ngIf="evaluationApiResult && evaluationApiResult?.reassigned_panel_status == 1" type="button" class="normal-btn" (click)="history()" mat-raised-button>
+            <span class="mr-2">Candidate Reassigned</span> <em class="icon-right-next"></em>
+          </button>
+        </div>
+      </div><br>
+  
+      <div class="row no-center-align">
+        <div class="col-4">
+          <div class="row">
+            <div class="col-5">
+              <span class="head"> Candidate name </span>
+            </div>
+            <div style="white-space: nowrap;" class="col-7 indent">
+              <span class="ans">: {{getCandidateData?.name}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-4">
+              <span class="head">Discipline </span>
+            </div>
+            <div class="col-8 indent">
+              <span class="ans">: {{getCandidateData?.field_discipline}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-5">
+              <span class="head"> Date of interview<span class="asterick">*</span> </span>
+            </div>
+            <div class="col-7">
+                <div class="date height-35">
+                <input class="height-35" style="padding-left: 12px;" placeholder="DD-MM-YYYY" [formControlName]="adaform_interview_date" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+  
+            </div>
+            <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+              <div class="col-5">
+                <span>&#160;</span>
+              </div>
+              <div style="margin-top: .25em;" class="col-7 validation">
+                <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="space"></div>
+  
+      <div class="row no-center-align">
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-5">
+              <span class="head">Date of birth </span>
+            </div>
+            <div style="white-space: nowrap;" class="col-7 indent">
+              <span class="ans">: {{getCandidateData?.field_dob}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div class="col-4">
+              <span class="head">Institute name </span>
+            </div>
+            <div class="col-8 indent">
+  
+              <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0]
+                && getCandidateData['education'][0]['field_institute'] ?
+                getCandidateData['education'][0]['field_institute'] : ''}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4">
+          <div class="row no-center-align">
+            <div style="white-space: nowrap;" class="col-5">
+              <span class="head">Place of interview<span class="asterick">*</span> </span>
+            </div>
+            <div class="col-7">
+              <input class="place" placeholder="Enter here" [formControlName]="adaform_interview_place" matInput>
+            </div>
+            <ng-container *ngIf="interview_place.invalid && interview_place.touched">
+              <div class="col-5">
+                <span>&#160;</span>
+              </div>
+              <div style="margin-top: .25em;" class="col-7 validation">
+                <span *ngIf="interview_place.errors?.required">Interview place is required</span>
+                <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="space"></div>
+    <!-- <div class="d-flex align-items-center justify-content-center mt-4 w-100">
+      <mat-radio-group style="margin-right: 5em;" aria-labelledby="example-radio-group-label"
+        class="d-flex w-50 justify-content-around" [formControlName]="caform_isattendedorNot">
+        <mat-radio-button (change)="statusChange(isattendedorNot)" class="f_size_18"
+          *ngFor="let attendance of intervieweeAttendance" [value]="attendance.value">
+          {{attendance.label}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div> -->
+    <div class="d-flex align-items-center justify-content-center mt-4 w-100">
+      <mat-radio-group style="margin-right: 5em;" aria-labelledby="example-radio-group-label"
+        class="d-flex w-50 justify-content-around" [formControlName]="caform_isattendedorNot">
+        <mat-radio-button (change)="statusChange(isattendedorNot)" class="f_size_18"
+          *ngFor="let attendance of intervieweeAttendance" [value]="attendance.value">
+          {{attendance.label}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <ng-container *ngIf="isattendedorNot.invalid && isattendedorNot.touched">
+      <div class="d-flex justify-content-center w-100 mt-3 validation">
+        <span *ngIf="isattendedorNot.errors?.required">Interview status required</span>
+      </div>
+    </ng-container>
+    <!-- <h5 class="head-h5 margin">   Assessment of the  candidate</h5>
+      <div class="vertical"></div> -->
+    <ng-container *ngIf="evaluationForm?.value[caform_isattendedorNot] == '1'">
+  <div class="space"></div>
+  <br>
+      <table class="evaluationTable" id="assessmentsTable" mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name" >
+          <th class="headerCell text-left" mat-header-cell *matHeaderCellDef ><strong>Attributes</strong> </th>
+          <td style="width: 390px;" mat-cell  *matCellDef="let assessment"><strong>{{assessment.name}}</strong><span
+              class="asterick">*</span>
+              <br>
+              <ul>
+                <li *ngFor="let item of assessment.expoints" class="subPoint">{{item.line}}</li>
+              </ul>
+            </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="average">
+          <th class="headerCell" mat-header-cell *matHeaderCellDef> <strong>Average </strong> <div style="font-size: 11px; white-space: break-spaces;">{{assessments[0].average}}</div>
+          </th>
+          <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+            <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 1 ? true : false"
+              (change)="setAssessmentLevel(assessment,1)" [name]="assessment.id" value="3">
+            </mat-radio-button>
+  
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="good">
+          <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Good </strong> <div style="font-size: 11px;white-space: break-spaces;">{{assessments[0].good}}</div>
+          </th>
+          <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+  
+            <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 3 ? true : false"
+              (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="2">
+  
+            </mat-radio-button>
+  
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="veryGood">
+          <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Excellent </strong> <div style="font-size: 11px;white-space: break-spaces;">{{assessments[0].veryGood}}</div></th>
+          <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+            <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 5 ? true : false"
+              (change)="setAssessmentLevel(assessment, 5)" [name]="assessment.id" value="1">
+  
+            </mat-radio-button>
+          </td>
+        </ng-container>
+  
+  
+  
+  
+  
+        <ng-container matColumnDef="notSuitable">
+          <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
+          </th>
+          <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+            <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
+              (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
+  
+            </mat-radio-button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div *ngIf="(technical_subject.touched && technical_subject.errors) || (app_understanding.touched && app_understanding.errors) ||(knowledgeExperience.touched && knowledgeExperience.errors) ||
+    (communicationskillOrExpression.touched && communicationskillOrExpression.errors) || (taskEffectiveness.touched && taskEffectiveness.errors) ||
+    (applicationOfKnowledge.touched && applicationOfKnowledge.errors)" class="mand validation1">
+        <span *ngIf="(technical_subject.errors?.required) || (app_understanding.errors?.required) || (knowledgeExperience.errors?.required) ||
+        (communicationskillOrExpression.errors?.required) || (taskEffectiveness.errors?.required) ||
+        (applicationOfKnowledge.errors?.required)">Make sure you have selected the radio buttons for all the above rows</span>
+      </div>
+  
+  <div class="space"></div>
+      <br>
+      <div class="assesmentremarks">
+  
+  
+  
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">Preferred Work Location<span class="asterick d-none">*</span>
+            </span>
+          </div>
+          <div class="col-8" style="padding-right: 0px;">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput placeholder="Enter here" [formControlName]="adaform_l1"></textarea>
+            <!-- <div class="charCount">
+              {{remarks.value?remarks.value.length:0}}/255 characters
+            </div> -->
+            <div *ngIf="lb1.touched && lb1.errors" class="mand validation1">
+              <!-- <span *ngIf="remarks.errors?.required">Overall remarks is required</span> -->
+              <div *ngIf="lb1.errors?.maxlength">Maxlength of 255 characters only allowed</div>
+              <div *ngIf="lb1.errors?.pattern">Alpha numerics only allowed</div>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">Preferred Business Unit<span class="asterick d-none">*</span>
+            </span>
+          </div>
+          <div class="col-8" style="padding-right: 0px;">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput placeholder="Enter here" [formControlName]="adaform_l2"></textarea>
+            <!-- <div class="charCount">
+              {{remarks.value?remarks.value.length:0}}/255 characters
+            </div> -->
+            <div *ngIf="lb2.touched && lb2.errors" class="mand validation1">
+              <!-- <span *ngIf="remarks.errors?.required">Overall remarks is required</span> -->
+              <div *ngIf="lb2.errors?.maxlength">Maxlength of 255 characters only allowed</div>
+              <div *ngIf="lb2.errors?.pattern">Alpha numerics only allowed</div>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">Overall Remarks<span class="asterick">*</span>
+            </span>
+          </div>
+          <div class="col-8" style="padding-right: 0px;">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput placeholder="Enter here" [formControlName]="adaform_remarks"></textarea>
+            <div class="d-flex position-relative">
+            <div *ngIf="remarks.touched && remarks.errors" class="mand validation1">
+              <div *ngIf="remarks.errors?.required">Overall remarks is required</div>
+              <div *ngIf="remarks.errors?.maxlength">Maxlength of 255 characters only allowed</div>
+              <div *ngIf="remarks.errors?.pattern">Alpha numerics only allowed</div>
+            </div>
+            <div class="charCount">
+              {{remarks.value?remarks.value.length:0}}/255 characters
+            </div>
+          </div>
+  
+          </div>
+        </div>
+
+        <div class="row pad-bootom mt-2">
+          <div class="col-4">
+            <span class="text">Recommended for another round<span class="asterick">*</span>
+            </span>
+          </div>
+          <div class="col-8" style="padding-right: 0px;">
+              <mat-radio-group class="radioDisp d-flex align-items-center" (change)="radioChange($event)" [formControlName]="adaform_recommend">
+                <div class="col-1">
+                  <mat-radio-button value="1">Yes
+                  </mat-radio-button>
+                </div>
+                <div class="col-1">
+                  <mat-radio-button value="0"> No
+                  </mat-radio-button>
+                </div>
+              </mat-radio-group>
+              <div *ngIf="recommend.touched && recommend.errors" class="mand validation1 pt-1">
+                <div *ngIf="recommend.errors?.required">Above field is required</div>
+              </div>
+  
+          </div>
+        </div>
+
+        <div *ngIf="recommend?.value == 1" class="row pad-bootom mt-2">
+          <div class="col-4">
+            <span class="text">Comments for recommending to another round<span class="asterick">*</span>
+            </span>
+          </div>
+          <div class="col-8" style="padding-right: 0px;">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput placeholder="Enter here" [formControlName]="adaform_recommend_comments"></textarea>
+            <div class="d-flex position-relative">
+            <div *ngIf="recommend_comments.touched && recommend_comments.errors" class="mand validation1">
+              <div *ngIf="recommend_comments.errors?.required">Comments is required</div>
+              <div *ngIf="recommend_comments.errors?.maxlength">Maxlength of 255 characters only allowed</div>
+              <div *ngIf="recommend_comments.errors?.pattern">Alpha numerics only allowed</div>
+            </div>
+            <div class="charCount">
+              {{recommend_comments.value?recommend_comments.value.length:0}}/255 characters
+            </div>
+          </div>
+  
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  
+  
+  
+    <ng-container *ngIf="evaluationForm?.value[caform_isattendedorNot] == '0'">
+      <div style="margin-left: 1em !important;" class="row pad-bootom mt-5 d-flex align-items-center">
+        <div style="height: 10px; width: 10%;" class="mt-1 d-flex pl-4">
+          <span class="text">Status<span class="asterick">*</span>:</span>
+        </div>
+        <div class="d-flex w-50">
+          <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
+            [formControlName]="adaform_NotattendedReason">
+            <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.label">
+              {{Notattended.label}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="NotattendedReason?.touched && NotattendedReason?.invalid">
+          <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+          <div style="margin-top: 1em; margin-left: 2em;" class="mand validation1">
+            <span *ngIf="NotattendedReason?.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class="space"></div>
+    <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
+      <button class="common-button common-button-height-30" mat-raised-button>Submit</button>
+    </div>
+  </form>
+  <div class="space"></div>
+  <ng-template #hrComments>
+    <div class="view-template-wrapper">
+        <h2 class="heading" mat-dialog-title>HR Comments</h2>
+        <mat-dialog-content class="dialog-content">
+            <div class="template"> 
+                <div class="content">
+                  {{evaluationApiResult?.reason_for_reassign ? evaluationApiResult?.reason_for_reassign : '-' }}
+                </div>
+            </div>
+        </mat-dialog-content>
+    </div>
+    <mat-dialog-actions align="end">
+            <button class="closeBtn" mat-button mat-dialog-close>CLOSE</button>
+        </mat-dialog-actions>
+</ng-template>
