@@ -298,7 +298,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_recommend].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_recommend].updateValueAndValidity();
 
-        if (this.evaluationForm[this.adaform_recommend].value == '1') {
+        if (this.evaluationForm.value[this.adaform_recommend] == '1') {
           this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(250), myGlobals.alphaNum]);
           this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();  
         } else {
@@ -405,6 +405,9 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
   }
 
   submitEvaluationForm() {
+    this.evaluationForm.patchValue({
+      [this.adaform_recommend_comments]: this.evaluationForm && this.evaluationForm.value[this.adaform_recommend].toString() && this.evaluationForm.value[this.adaform_recommend].toString() == '1' ? this.evaluationForm.value[this.adaform_recommend_comments] : null
+    });
     if (this.evaluationForm.valid) {
       const data = {
         evaluation: 'submit'
