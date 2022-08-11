@@ -93,24 +93,27 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       top.scrollIntoView();
       top = null;
     }
- }
+  }
 
- isBulkAssign() {
-   if (this.isAssignCandidateToInterviewPanel) {
-    this.selectedTemplate = this.Upload_CandidateAssigntoInterviewPanel;
-    this.templates = [
-      {
-        value: this.Upload_CandidateAssigntoInterviewPanel,
-        name: 'Bulk Assign'
-      },
-      {
-        value: this.Upload_CandidateAssigneeRemoval,
-        name: 'Unassign Interview Panelist'
+  isBulkAssign() {
+    if (this.isAssignCandidateToInterviewPanel) {
+      this.selectedTemplate = this.Upload_CandidateAssigntoInterviewPanel;
+      this.templates = [
+        {
+          value: this.Upload_CandidateAssigntoInterviewPanel,
+          name: 'Bulk Assign'
+        },
+        {
+          value: this.Upload_CandidateAssigneeRemoval,
+          name: 'Unassign Interview Panelist'
+        }
+      ];
+      if (this.appConfig.getSelectedCustomerCode() == "#LTTS") {
+        this.templates.pop();
       }
-    ];
-}
+    }
 
- }
+  }
 
   changeTemplate(e) {
     this.delete();
@@ -155,16 +158,16 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
     if (this.selectedTemplate == this.Upload_Institutes) {
       const data = {
-      bulk_upload: 'institute-bulk'
-    };
-    this.openDialog(ShortlistBoxComponent, data);
+        bulk_upload: 'institute-bulk'
+      };
+      this.openDialog(ShortlistBoxComponent, data);
     }
 
     if (this.selectedTemplate == this.Upload_InterviewPanel) {
       const data = {
-      bulk_upload: 'invPanel-bulk'
-    };
-    this.openDialog(ShortlistBoxComponent, data);
+        bulk_upload: 'invPanel-bulk'
+      };
+      this.openDialog(ShortlistBoxComponent, data);
     }
 
     if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
@@ -249,12 +252,12 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   checkAndCallRepectiveFormatter(SavedData) {
     if (this.selectedTemplate == this.Upload_Candidates) {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Tag') &&
-      (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
-      (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
-      this.candidateExceltoJsonFormatter(this.SavedData);
-    } else {
-      this.validFile = true;
-    }
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
+        this.candidateExceltoJsonFormatter(this.SavedData);
+      } else {
+        this.validFile = true;
+      }
     }
 
     if (this.selectedTemplate == this.Upload_Institutes) {
@@ -281,173 +284,173 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
     if (this.selectedTemplate == this.Upload_InterviewPanel) {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 4 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'name') &&
-      (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'employee id') &&
-      (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'email') &&
-      (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'discipline')) {
-      this.invPanelExceltoJsonFormatter(this.SavedData);
-    } else {
-      this.validFile = true;
-    }
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'employee id') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'email') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'discipline')) {
+        this.invPanelExceltoJsonFormatter(this.SavedData);
+      } else {
+        this.validFile = true;
+      }
     }
 
     if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Shortlist Name') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Candidate Email ID') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interview Panel Email ID')) {
-      this.assignCandidatetoInvpanelExceltoJsonFormatter(this.SavedData);
-    } else {
-      this.validFile = true;
-    }
+        this.assignCandidatetoInvpanelExceltoJsonFormatter(this.SavedData);
+      } else {
+        this.validFile = true;
+      }
     }
 
     if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Shortlist Name') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Candidate Email ID') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interview Panel Email ID')) {
-      this.removalOfInvpanelExceltoJsonFormatter(this.SavedData);
-    } else {
-      this.validFile = true;
-    }
-    }
-
-
-}
-
-removalOfInvpanelExceltoJsonFormatter(data) {
-  this.dateFormatExist = false;
-  let count = 0;
-  const listArray = [];
-  data.forEach((dup, i) => {
-    let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
-    if (i > 0 && dup) {
-      count += 1;
-      dup.forEach((element, index) => {
-        if (index < 3) {
-          if (index == 0) {
-            Shortlist_Name = element ? element : '';
-          }
-          if (index == 1) {
-            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              this.dateFormatExist = true;
-            } else {
-              candidate_email_id = element ? element : '';
-            }
-          }
-          if (index == 2) {
-            inv_panel_email_id = element ? element : '';
-          }
-        }
-      });
-      const value = {
-        shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
-        user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
-        hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
-      };
-
-
-      if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
-        listArray.push(value);
+        this.removalOfInvpanelExceltoJsonFormatter(this.SavedData);
+      } else {
+        this.validFile = true;
       }
     }
-  });
-  this.uploadedListArray = listArray;
-  this.totalCountofCandidates = count - 1;
-}
 
-assignCandidatetoInvpanelExceltoJsonFormatter(data) {
-  this.dateFormatExist = false;
-  let count = 0;
-  const listArray = [];
-  data.forEach((dup, i) => {
-    let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
-    if (i > 0 && dup) {
-      count += 1;
-      dup.forEach((element, index) => {
-        if (index < 3) {
-          if (index == 0) {
-            Shortlist_Name = element ? element : '';
-          }
-          if (index == 1) {
-            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              this.dateFormatExist = true;
-            } else {
-              candidate_email_id = element ? element : '';
+
+  }
+
+  removalOfInvpanelExceltoJsonFormatter(data) {
+    this.dateFormatExist = false;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
+      if (i > 0 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 3) {
+            if (index == 0) {
+              Shortlist_Name = element ? element : '';
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                candidate_email_id = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              inv_panel_email_id = element ? element : '';
             }
           }
-          if (index == 2) {
-            inv_panel_email_id = element ? element : '';
-          }
+        });
+        const value = {
+          shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
+          user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
+          hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
+        };
+
+
+        if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
+          listArray.push(value);
         }
-      });
-      const value = {
-        shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
-        user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
-        hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
-      };
-
-
-      if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
-        listArray.push(value);
       }
-    }
-  });
-  this.uploadedListArray = listArray;
-  this.totalCountofCandidates = count - 1;
-}
+    });
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
+  }
 
-invPanelExceltoJsonFormatter(data) {
-  this.dateFormatExist = false;
-  let count = 0;
-  const listArray = [];
-  data.forEach((dup, i) => {
-    let name; let employee_id; let email; let discipline;
-    if (i > 0 && dup) {
-      count += 1;
-      dup.forEach((element, index) => {
-        if (index < 4) {
-          if (index == 0) {
-            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              this.dateFormatExist = true;
-            } else {
-              name = element ? element : '';
+  assignCandidatetoInvpanelExceltoJsonFormatter(data) {
+    this.dateFormatExist = false;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
+      if (i > 0 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 3) {
+            if (index == 0) {
+              Shortlist_Name = element ? element : '';
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                candidate_email_id = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              inv_panel_email_id = element ? element : '';
             }
           }
-          if (index == 1) {
-            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              this.dateFormatExist = true;
-            } else {
-              employee_id = element ? element : '';
-            }
-          }
-          if (index == 2) {
-            email = element ? element : '';
-          }
-          if (index == 3) {
-            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              this.dateFormatExist = true;
-            } else {
-              discipline = element ? element : '';
-            }
-          }
+        });
+        const value = {
+          shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
+          user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
+          hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
+        };
+
+
+        if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
+          listArray.push(value);
         }
-      });
-      const value = {
-        name: name ? name.toString().trim() : '',
-        employee_id: employee_id ? employee_id.toString().trim() : '',
-        email: email ? email.toString().trim() : '',
-        discipline: discipline ? discipline.toString().trim() : '',
-      };
-
-      if ((name && name.toString().trim()) || (employee_id && employee_id.toString().trim()) || (email && email.toString().trim()) || (discipline && discipline.toString().trim())) {
-        listArray.push(value);
       }
-    }
-  });
-  this.uploadedListArray = listArray;
-  this.totalCountofCandidates = count - 1;
-}
+    });
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
+  }
 
-insitituteExceltoJsonFormatter(data) {
+  invPanelExceltoJsonFormatter(data) {
+    this.dateFormatExist = false;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let name; let employee_id; let email; let discipline;
+      if (i > 0 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 4) {
+            if (index == 0) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                name = element ? element : '';
+              }
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                employee_id = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              email = element ? element : '';
+            }
+            if (index == 3) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                discipline = element ? element : '';
+              }
+            }
+          }
+        });
+        const value = {
+          name: name ? name.toString().trim() : '',
+          employee_id: employee_id ? employee_id.toString().trim() : '',
+          email: email ? email.toString().trim() : '',
+          discipline: discipline ? discipline.toString().trim() : '',
+        };
+
+        if ((name && name.toString().trim()) || (employee_id && employee_id.toString().trim()) || (email && email.toString().trim()) || (discipline && discipline.toString().trim())) {
+          listArray.push(value);
+        }
+      }
+    });
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
+  }
+
+  insitituteExceltoJsonFormatter(data) {
     this.dateFormatExist = false;
     let count = 0;
     const listArray = [];
@@ -539,7 +542,7 @@ insitituteExceltoJsonFormatter(data) {
     this.uploadedListArray = listArray;
 
     this.totalCountofCandidates = count - 1;
-}
+  }
 
   candidateExceltoJsonFormatter(data) {
     this.dateFormatExist = false;
@@ -616,9 +619,9 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
-      if(datas['errorLength'] == 0) {
+      if (datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview Panelist has been successfully unassigned.' : '', 'Unassign Success');
-        if(this.appConfig.getLocalData('roles') == 'hr') {
+        if (this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
         }
       } else {
@@ -642,9 +645,9 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
-      if(datas['errorLength'] == 0) {
+      if (datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
-        if(this.appConfig.getLocalData('roles') == 'hr') {
+        if (this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
         }
       } else {
@@ -685,13 +688,13 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length > 0 ? data.length : 0,
       };
 
-      if(datas['errorLength'] == 0) {
+      if (datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview panel has been successfully uploaded.' : '', 'Bulk Upload Success');
-        if(this.appConfig.getLocalData('roles') == 'hr') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 3});
+        if (this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, { id: 3 });
         }
-        if(this.appConfig.getLocalData('roles') == 'administrator') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 3});
+        if (this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, { id: 3 });
         }
       } else {
         this.openDialog1(ShortlistBoxComponent, datas);
@@ -724,13 +727,13 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length ? data.length : 0,
       };
 
-      if(datas['errorLength'] == 0) {
+      if (datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Institute details have been successfully uploaded.' : '', 'Bulk Upload Success');
-        if(this.appConfig.getLocalData('roles') == 'hr') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 2});
+        if (this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, { id: 2 });
         }
-        if(this.appConfig.getLocalData('roles') == 'administrator') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 2});
+        if (this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, { id: 2 });
         }
       } else {
         this.openDialog1(ShortlistBoxComponent, datas);
@@ -766,21 +769,21 @@ insitituteExceltoJsonFormatter(data) {
         role: this.appConfig.getLocalData('roles')
       };
       // if(datas['totalLength'] - datas['errorLength'] !== 0) {
-      if(datas['errorLength'] == 0) {
+      if (datas['errorLength'] == 0) {
         if (this.currentRole == 'institute') {
-          this.appConfig.successWithTitle( 'You may now trigger mail to the newly added candidates.', datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : 'Bulk Upload Success');
+          this.appConfig.successWithTitle('You may now trigger mail to the newly added candidates.', datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : 'Bulk Upload Success');
         } else {
           this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
         }
 
-        if(this.appConfig.getLocalData('roles') == 'hr') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 1});
+        if (this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, { id: 1 });
         }
-        if(this.appConfig.getLocalData('roles') == 'administrator') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        if (this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, { id: 1 });
         }
-        if(this.appConfig.getLocalData('roles') == 'institute') {
-          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        if (this.appConfig.getLocalData('roles') == 'institute') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST, { id: 1 });
         }
       } else {
         this.openDialog1(ShortlistBoxComponent, datas);
@@ -872,27 +875,27 @@ insitituteExceltoJsonFormatter(data) {
     this.uploadedListArray = [];
   }
 
-    // Open dailog
-    openDialog(component, data) {
-      let dialogDetails: any;
-      /**
-       * Dialog modal window
-       */
-      // tslint:disable-next-line: one-variable-per-declaration
-      const dialogRef = this.matDialog.open(component, {
-        width: 'auto',
-        height: 'auto',
-        autoFocus: false,
-        data
-      });
+  // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: any;
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.skipKyc = result;
-          this.callRespectiveBulkUploadAPI();
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.skipKyc = result;
+        this.callRespectiveBulkUploadAPI();
+      }
+    });
+  }
 
   // Open dailog
   openDialog1(component, data) {
