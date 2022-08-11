@@ -65,14 +65,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private sharedService: SharedServiceService
   ) {
     if (environment.production) {
-    const gaScript = document.createElement("script");
-    gaScript.innerHTML = `
+      const gaScript = document.createElement("script");
+      gaScript.innerHTML = `
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'UA-177278337-1');
     `;
-    document.head.appendChild(gaScript);
+      document.head.appendChild(gaScript);
     }
     // tslint:disable-next-line: deprecation
     this.router.events
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           //  ..... // here your code when page is refresh
         }
         this.getScreenSize(event.url.includes('/candidate/'));
-        this.checkIE();    
+        this.checkIE();
       });
   }
 
@@ -109,7 +109,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     let token = this.appConfig.getLocalData("csrf-login");
     // token ? this.initSessionTimer() : '';
     // this.sessionTimeStartRxjs();
-    // Farooq branch
   }
 
   ngAfterViewInit() {
@@ -128,7 +127,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           ? this.initSessionTimer()
           : this.sessionHandlingDisabled();
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -155,7 +154,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
-  
+
   @HostListener("window:mousemove", ["$event"])
   checkIE(event?) {
     const isIEOrEdge = /msie\s|trident\//i.test(window.navigator.userAgent);
