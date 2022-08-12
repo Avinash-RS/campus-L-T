@@ -234,7 +234,7 @@
           </div>
           <div class="col-6">
             <div style="border: 1px solid #d9d9d9; padding: 4px">
-              {{(commonEvaluationDetails && commonEvaluationDetails.hr_comments) ? commonEvaluationDetails.hr_comments : '-'}}  
+              {{(commonEvaluationDetails && commonEvaluationDetails.hr_comments) ? commonEvaluationDetails.hr_comments : commonEvaluationDetails?.auto_decision ? 'System Defined Rule' : '-'}}
             </div>
           </div>
         </div>
@@ -245,7 +245,7 @@
           </div>
           <div class="col-6">
             <div>
-              {{(commonEvaluationDetails && commonEvaluationDetails.updated_by) ? commonEvaluationDetails.updated_by : '-'}} at {{commonEvaluationDetails.updated_date ? (commonEvaluationDetails.updated_date | date: "dd MMM yyyy - HH:mm a") : ''}}
+              {{(commonEvaluationDetails && commonEvaluationDetails.updated_by) ? commonEvaluationDetails.updated_by : commonEvaluationDetails?.auto_decision ? 'System' : '-'}} at {{commonEvaluationDetails.updated_date ? (commonEvaluationDetails.updated_date | date: "dd MMM yyyy - HH:mm a") : ''}}
             </div>
           </div>
         </div>

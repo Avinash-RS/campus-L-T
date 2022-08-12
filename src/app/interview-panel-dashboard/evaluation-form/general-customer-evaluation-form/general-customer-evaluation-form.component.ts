@@ -220,10 +220,10 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
 
   radioChange(event) {
     if (event.value == 1) {
-      this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(250), myGlobals.alphaNum]);
+      this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), myGlobals.alphaNum]);
       this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();
     } else {
-      this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
+      this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]);
       this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();
     }
   }
@@ -234,7 +234,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_NotattendedReason].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_NotattendedReason].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
+        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]);
         this.evaluationForm['controls'][this.adaform_remarks].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_interview_date].clearValidators();
@@ -261,7 +261,7 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_recommend].clearValidators();
         this.evaluationForm['controls'][this.adaform_recommend].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
+        this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]);
         this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();
 
 
@@ -299,10 +299,10 @@ export class GeneralCustomerEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_recommend].updateValueAndValidity();
 
         if (this.evaluationForm.value[this.adaform_recommend] == '1') {
-          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(250), myGlobals.alphaNum]);
+          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), myGlobals.alphaNum]);
           this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();  
         } else {
-          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
+          this.evaluationForm['controls'][this.adaform_recommend_comments].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]);
           this.evaluationForm['controls'][this.adaform_recommend_comments].updateValueAndValidity();  
         }
 
